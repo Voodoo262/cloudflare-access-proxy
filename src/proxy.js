@@ -24,6 +24,7 @@ if (isGitHubActions) {
     TARGET_URL = process.env.TARGET_URL;
     LISTEN_PORT = process.env.LISTEN_PORT;
 }
+LISTEN_PORT = LISTEN_PORT || 8080;
 
 if (!TARGET_URL || !CF_ACCESS_CLIENT_ID || !CF_ACCESS_CLIENT_SECRET) {
     console.error('Missing required environment variables.');
