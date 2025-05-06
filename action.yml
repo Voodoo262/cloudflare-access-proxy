@@ -1,0 +1,15 @@
+name: 'Cloudflare Access Proxy'
+description: 'Start a local reverse proxy that injects Cloudflare Access headers'
+inputs:
+  cf-access-client-id:
+    required: true
+    description: 'Cloudflare Access Client ID'
+  cf-access-client-secret:
+    required: true
+    description: 'Cloudflare Access Client Secret'
+  target-url:
+    required: true
+    description: 'The destination URL to proxy to (e.g., https://my-service.cloudflareaccess.com)'
+runs:
+  using: 'node16'
+  main: 'proxy.js'
