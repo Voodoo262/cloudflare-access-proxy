@@ -10,6 +10,9 @@ inputs:
   target-url:
     required: true
     description: 'The destination URL to proxy to (e.g., https://my-service.cloudflareaccess.com)'
+  listen-port:
+    required: false
+    description: 'The port that the proxy will listen on (default is 8080)'
 runs:
   using: 'node20'
   main: 'dist/index.js'
