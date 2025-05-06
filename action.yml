@@ -11,5 +11,5 @@ inputs:
     required: true
     description: 'The destination URL to proxy to (e.g., https://my-service.cloudflareaccess.com)'
 runs:
-  using: 'node18'
+  using: 'node20'
   main: 'dist/index.js'
