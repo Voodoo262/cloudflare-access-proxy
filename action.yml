@@ -16,13 +16,15 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - uses: actions/checkout@v4
+
     - name: Setup Node
       uses: actions/setup-node@v4
       with:
         node-version: '20'
 
     - name: Install NPM dependencies
-      run: npm install
+      run: npm ci
       shell: bash
 
     - name: Start proxy in background
