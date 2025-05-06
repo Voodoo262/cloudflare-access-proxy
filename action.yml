@@ -22,7 +22,7 @@ runs:
         node-version: '20'
 
     - name: Install NPM dependencies
-      run: npm ci
+      run: npm install
       shell: bash
 
     - name: Start proxy in background
