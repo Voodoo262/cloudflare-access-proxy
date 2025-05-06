@@ -1,9 +1,15 @@
 {
     "name": "cloudflare-access-proxy",
-    "main": "proxy.js",
+    "main": "src/proxy.js",
+    "scripts": {
+        "package": "ncc build --license licenses.txt"
+    },
     "dependencies": {
         "@actions/core": "^1.11.1",
         "dotenv": "^16.5.0",
         "http-proxy": "^1.18.1"
+    },
+    "devDependencies": {
+        "@vercel/ncc": "^0.38.3"
     }
 }
