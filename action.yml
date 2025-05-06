@@ -14,5 +14,18 @@ inputs:
     required: false
     description: 'The port that the proxy will listen on (default is 8080)'
 runs:
-  using: 'node20'
-  main: 'dist/index.js'
+  using: 'composite'
+  steps:
+    - name: Setup Node
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+    - name: Install NPM dependencies
+      run: npm ci
+    - name: Start proxy in background
+      run: node src/proxy.js &
+      env:
+        CF_ACCESS_CLIENT_ID: ${{ inputs.cf-access-client-id }}
+        CF_ACCESS_CLIENT_SECRET: ${{ inputs.cf-access-client-secret }}
+        TARGET_URL: ${{ inputs.target-url }}
+        LISTEN_PORT: ${{ inputs.listen-port }}
