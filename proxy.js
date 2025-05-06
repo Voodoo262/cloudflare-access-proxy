@@ -1,16 +1,33 @@
-require('dotenv').config();
 const http = require('http');
 const httpProxy = require('http-proxy');
 
-// Check for proper configuration of environment variables
-const TARGET_URL = process.env.TARGET_URL;
-const CF_ACCESS_CLIENT_ID = process.env.CF_ACCESS_CLIENT_ID;
-const CF_ACCESS_CLIENT_SECRET = process.env.CF_ACCESS_CLIENT_SECRET;
-const LISTEN_PORT = process.env.LISTEN_PORT ?? 8080;
+let CF_ACCESS_CLIENT_ID;
+let CF_ACCESS_CLIENT_SECRET;
+let TARGET_URL;
+let LISTEN_PORT;
+
+// Step 1: Detect environment
+const isGitHubActions = process.env.GITHUB_ACTIONS === 'true';
+
+if (isGitHubActions) {
+    // Use @actions/core for GitHub Actions input
+    const core = require('@actions/core');
+    CF_ACCESS_CLIENT_ID = core.getInput('cf-access-client-id');
+    CF_ACCESS_CLIENT_SECRET = core.getInput('cf-access-client-secret');
+    TARGET_URL = core.getInput('target-url');
+    LISTEN_PORT = core.getInput('listen-port');
+} else {
+    // Use dotenv for local development
+    require('dotenv').config();
+    CF_ACCESS_CLIENT_ID = process.env.CF_ACCESS_CLIENT_ID;
+    CF_ACCESS_CLIENT_SECRET = process.env.CF_ACCESS_CLIENT_SECRET;
+    TARGET_URL = process.env.TARGET_URL;
+    LISTEN_PORT = process.env.LISTEN_PORT;
+}
 
 if (!TARGET_URL || !CF_ACCESS_CLIENT_ID || !CF_ACCESS_CLIENT_SECRET) {
-  console.error('Missing required environment variables.');
-  process.exit(1);
+    console.error('Missing required environment variables.');
+    process.exit(1);
 }
 
 const proxy = httpProxy.createProxyServer({
