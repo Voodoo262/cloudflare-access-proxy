@@ -50,6 +50,12 @@ jobs:
         run: npm test                               # run tests that communicate with self-hosted service
 ```
 
+### Inputs
+- `cf-access-client-id` - (required) Client ID of the service token
+- `cf-access-client-secret` - (required) Client Secret of the service token
+- `target-url` - (required) Public hostname of Cloudflare Access application
+- `listen-port` - (optional) Port the reverse proxy will listen on (default: 8080)
+
 ### Prerequisites
 1. A domain name configured to use Cloudflare DNS
 2. A Cloudflare Tunnel running inside the network where the private, self-hosted application resides
