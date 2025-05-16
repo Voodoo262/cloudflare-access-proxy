@@ -1,5 +1,8 @@
 name: 'Cloudflare Access Proxy'
 description: 'Start a local reverse proxy that injects Cloudflare Access headers'
+branding:
+  icon: cloud
+  color: orange
 inputs:
   cf-access-client-id:
     required: true
