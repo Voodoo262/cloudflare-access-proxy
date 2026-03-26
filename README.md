@@ -23,6 +23,40 @@ Calling this action will start a HTTP reverse proxy on the port defined by the `
 
 The proxy will inject the `CF-Access-Client-Id` and `CF-Access-Client-Secret` headers into the first request that gets forwarded. Upon successful authentication+authorization, the authorization token will be cached and used in subsequent requests.
 
+
+```mermaid
+sequenceDiagram
+    actor Tests as Test Suite
+    participant Proxy as CF Access Proxy<br/>(localhost:LISTEN_PORT)
+    participant CF as Cloudflare Access
+    participant Tunnel as Cloudflare Tunnel
+    participant SUT as SUT<br/>(private network)
+
+    Note over Tests,SUT: First request — service token auth
+    Tests->>Proxy: HTTP request
+    Proxy->>CF: Forward + inject<br/>CF-Access-Client-Id<br/>CF-Access-Client-Secret headers
+    CF->>CF: Validate service token
+    CF-->>Proxy: 302 + Set-Cookie: CF_Authorization=<token>
+    Proxy->>Proxy: Cache CF_Authorization cookie
+    Proxy->>CF: Retry request with CF_Authorization cookie
+    CF->>Tunnel: Authenticated request
+    Tunnel->>SUT: Forward to private app
+    SUT-->>Tunnel: Response
+    Tunnel-->>CF: Response
+    CF-->>Proxy: Response
+    Proxy-->>Tests: Response
+
+    Note over Tests,SUT: Subsequent requests — cached token
+    Tests->>Proxy: HTTP request
+    Proxy->>CF: Forward + inject<br/>CF_Authorization cookie
+    CF->>Tunnel: Authenticated request
+    Tunnel->>SUT: Forward to private app
+    SUT-->>Tunnel: Response
+    Tunnel-->>CF: Response
+    CF-->>Proxy: Response
+    Proxy-->>Tests: Response
+```
+
 ### Example
 ```yaml
 on:
