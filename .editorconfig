@@ -1,5 +1,6 @@
 root = true
 
+# Default settings for all files
 [*]
 charset = utf-8
 end_of_line = lf
@@ -9,15 +10,85 @@ indent_style = space
 indent_size = 2
 max_line_length = 120
 
-[*.{java,kt,cs,go,py}]
+# Java files - 4 spaces (matches existing pattern in labelzoom-api, labelzoom-engine-core, etc.)
+[*.java]
 indent_size = 4
 
-[Makefile]
+# Kotlin files - 4 spaces
+[*.kt]
+indent_size = 4
+
+# C# files - 4 spaces (matches existing pattern in AddressEditor, SuppressibleMessageBox, labelzoom-studio, etc.)
+[*.cs]
+indent_size = 4
+
+# Go files - tabs (Go standard, matches existing pattern in lz-print-agent-go)
+[*.go]
+indent_style = tab
+indent_size = 4
+
+# Python files - 4 spaces (matches existing pattern in labelzoom-zpl-sdk/python)
+[*.py]
+indent_size = 4
+
+# TypeScript and JavaScript files - 4 spaces (matches existing pattern in labelzoom-cf-api-gateway, etc.)
+# Note: labelzoom-cf-analytics-pipeline and labelzoom-cf-queue-consumer use tabs - override locally if needed
+[*.{ts,js,mjs,cjs}]
+indent_size = 4
+
+# React files - 2 spaces (matches existing pattern in labelzoom-web-app-react)
+[*.{tsx,jsx}]
+indent_size = 2
+
+# JSON files - 2 spaces (matches existing pattern in package.json files)
+[*.json]
+indent_size = 2
+
+# YAML files - 2 spaces (matches existing pattern in action.yml, etc.)
+[*.{yml,yaml}]
+indent_size = 2
+
+# Gradle files - 4 spaces (matches existing pattern in build.gradle files)
+[*.gradle]
+indent_size = 4
+
+# Groovy files - 4 spaces
+[*.groovy]
+indent_size = 4
+
+# XML files - 2 spaces
+[*.xml]
+indent_size = 2
+
+# HTML files - 2 spaces
+[*.{html,htm}]
+indent_size = 2
+
+# CSS, SCSS, LESS files - 2 spaces
+[*.{css,scss,sass,less}]
+indent_size = 2
+
+# Makefiles - tabs (required)
+[{Makefile,makefile,GNUmakefile,*.mk}]
 indent_style = tab
 
+# Windows batch and PowerShell files - CRLF line endings
 [*.{bat,cmd,ps1}]
 end_of_line = crlf
 
+# Markdown files - no trailing whitespace trimming, no line length limit
 [*.md]
 trim_trailing_whitespace = false
 max_line_length = off
+
+# Project files
+[*.{csproj,vbproj,vcxproj,vcxproj.filters,proj,projitems,shproj}]
+indent_size = 2
+
+# Solution files
+[*.sln]
+indent_style = tab
+
+# Configuration files
+[*.{toml,ini,cfg,conf,config}]
+indent_size = 2
