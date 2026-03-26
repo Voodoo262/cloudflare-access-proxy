@@ -2,7 +2,8 @@
   "name": "cloudflare-access-proxy",
   "main": "src/proxy.js",
   "scripts": {
-    "package": "ncc build --license licenses.txt"
+    "package": "ncc build --license licenses.txt",
+    "test": "node --test src/handlers.test.js"
   },
   "dependencies": {
     "dotenv": "^16.5.0",
